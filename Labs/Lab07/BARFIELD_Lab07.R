@@ -40,6 +40,20 @@ myAbs(-2.3)
 myVec <- c(1.1, 2, 0, -4.3, 9, -12)
 myAbs(myVec)
 
+#Tried it out with an NA during class on 3/5 (demo of problem)
+NAVec <- c(1, NA, -3)
+myAbs(NAVec) #ahhhhhh doesn't work!
+
+# Demo from class on 3/5 -- Code by SMF
+myAbs <- function(x) {
+  x[which(x < 0)] <- -x[which(x < 0)]
+  return(x)    
+}
+
+#See if it works
+NAVec <- c(1, NA, -3)
+myAbs(NAVec) #works, obviously
+
 ## Problem #3 ##
 
 # Write a function that returns a vector of the first n Fibo #s
