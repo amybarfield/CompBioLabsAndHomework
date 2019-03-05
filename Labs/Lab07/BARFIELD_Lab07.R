@@ -26,7 +26,7 @@ myAbs <- function(value) {
     if (value[i] < 0) 
       value[i] <- (value[i] * -1)
   }    
-    return(value)    
+  return(value)    
 }
 
 # Check to see if it works 
