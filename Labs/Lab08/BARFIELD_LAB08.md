@@ -26,4 +26,8 @@ return(growthData)
 
 The values in the data file are `growthModel(0.8, 10000, 12, 2500)` meaning the intrinsic growth rate is 0.8, the carrying capacity is 10000, the # of generations is 12, and the initial population is 2500. 
 
+Find it [here](https://github.com/amybarfield/CompBioLabsAndHomework/blob/master/Labs/Lab08/BARFIELD_Lab08.R)!
 
+Look at the plot!
+
+![Time v Abundance plot](https://github.com/amybarfield/CompBioLabsAndHomework/blob/master/Labs/Lab08/plot.png)
