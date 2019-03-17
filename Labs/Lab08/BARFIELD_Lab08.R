@@ -21,7 +21,31 @@ print(abundance)
 plot(time,abundance)
 
 # Turn the logistic growth model code into a function that takes r (the intrinsic growth rate), K (the carrying capacity), the total number of generations, and the initial population size as its arguments.
+# Make it create a plot of abundance over time
 
-growthModel <- function(r, k, time, initAbundance)
-  
+growthModel <- function(r, K, t, nInit) {
+  n <- rep(nInit, t)
+  Time <- (1:t)
+  for (i in 2:t) {
+    n[i] <- n[i-1] + ( r * n[i-1] * (K - n[i-1])/K )
+  }
+  growthData <- cbind(Time, n)
+  plot(Time, n, xlab = "Time", ylab = "Abundance")
+  return(growthData)
+}
 
+# part d) Calling the function with some different test runs
+growthModel(0.8, 10000, 12, 2500)
+
+growthModel(0.8, 10000, 20, 100)  
+
+growthModel(0.8, 25000, 50, 100)
+
+
+# part e) write the code to a data file
+setwd("/Users/amybarfield/Grad_School/CompBio_Sp2019/CompBioLabsAndHomework/Labs/Lab08/")
+
+results <- growthModel(0.8, 10000, 12, 2500)
+colnames(results) <- c("Generations", "Abundance")
+
+write.csv(x = results, file = "Lab08_results.csv", row.names = FALSE)
