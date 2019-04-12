@@ -25,17 +25,17 @@ woodData <- woodData[-c(12150), ]
 
 #Step 5: Dealing with one kind of pseudo-replication
 #create a table with mean wood density data per species
-woodDataGrouped <- summarise(group_by(woodData, Binomial, Family), meanDensity = mean(Wood.density..g.cm.3...oven.dry.mass.fresh.volume))
+woodDataGrouped_Binomial <- summarise(group_by(woodData, Binomial, Family), meanDensity = mean(Wood.density..g.cm.3...oven.dry.mass.fresh.volume))
 
 #Step 6: Contrasting most and least dense families
 #6a: create a table with mean wood density data per species using table created in step 5
-woodDataGrouped_Family <- summarise(group_by(woodDataGrouped, Family), meanDensity = mean(meanDensity))
+woodDataGrouped_Family <- summarise(group_by(woodDataGrouped_Binomial, Family), meanDensity = mean(meanDensity))
 
 #6b: sort the results by mean data and store in data frame
 meanDensity_Family <- as.data.frame(woodDataGrouped_Family[order(woodDataGrouped_Family$meanDensity),])
 
 #6c: what are the families with the highest average densities?
-tail(meanDensity_Family, n=8)
+top_Density <- tail(meanDensity_Family, n=8)
 
 #Family meanDensity
 #184 Asteropeiaceae   0.8318333
@@ -48,7 +48,7 @@ tail(meanDensity_Family, n=8)
 #191   Hypericaceae   0.9850000
 
 #6c what are the families with the lowest average densities?
-head(meanDensity_Family, n=8)
+low_Density <- head(meanDensity_Family, n=8)
 
 #Family meanDensity
 #1    Caricaceae   0.2133333
@@ -65,6 +65,34 @@ head(meanDensity_Family, n=8)
 library("ggplot2")
 # create plot of individual species from the families with the highest average densities
 
+#make a data frame that has all of the data points for the top 8 families
+top8 <- woodDataGrouped_Binomial[woodDataGrouped_Binomial$Family %in% (top_Density$Family), ]              
 
+ggplot(top8) +
+  geom_boxplot(aes(Family, meanDensity)) +
+  facet_wrap( ~Family, scales="free_x")
 
 # create plot of individual species from the families with the lowest average densities
+
+#make a data frame that has all of the data points for the top 8 families
+bottom8 <- woodDataGrouped_Binomial[woodDataGrouped_Binomial$Family %in% (low_Density$Family), ]              
+
+ggplot(bottom8) +
+  geom_boxplot(aes(Family, meanDensity)) +
+  facet_wrap( ~Family, scales="free_x")
+
+#Step 8
+# make two plots where all the data is on one graph instead of facets
+#For top 8
+ggplot(top8) +
+  geom_boxplot(aes(Family, meanDensity)) +
+  coord_flip() +
+  ylim(0.3, 1.2)
+
+#For bottom 8
+ggplot(bottom8) +
+  geom_boxplot(aes(Family, meanDensity)) +
+  coord_flip() +
+  ylim(0.3, 1.2)
+  
+
