@@ -352,7 +352,8 @@ dev.off()
 
 pdf("maxGrowth.pdf")
 ggplot(max.min.df, aes(x = Treatment, y = max)) +
-  geom_bar(stat="identity", aes( color = Treatment)) +
+  geom_bar(stat="identity") +
+  scale_fill_brewer("Blues") +
   aes(fill = Treatment) +
   facet_wrap(~Organism) +
   ggtitle("Maximum Growth for Each Organism") +
